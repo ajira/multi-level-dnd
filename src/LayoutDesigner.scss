@@ -1,0 +1,39 @@
+.container {
+  display: flex;
+  height: 40em;
+  .lhsContainer {
+    flex: 1;
+    border: 1px solid black;
+  }
+  .rhsContainer {
+    flex: 5;
+    border: 1px solid black;
+    overflow: scroll;
+  }
+  .elementContainer {
+    background: #ffffff;
+    border: #404040;
+  }
+  .horizontalContainer {
+    display: flex;
+    flex: 1;
+    min-height: 5em;
+    border: 1px dotted grey;
+    padding: 10px;
+    margin: 10px;
+  }
+  .verticalContainer {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-height: 3em;
+    border: 1px dotted grey;
+    padding: 10px;
+  }
+  .element{
+    min-height: 3em;
+    display: flex;
+    border: 1px dotted grey;
+    background: aquamarine;
+  }
+}
