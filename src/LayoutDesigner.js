@@ -77,21 +77,20 @@ const updateState = (id, index, arr, matching, item) => {
 };
 
 const LayoutDesigner = () => {
-  console.log(">>>>>>>>> Rerendering");
   const [layout, setLayout] = useState([
     {
       draggableId: 1,
       type: "Vertical",
       config: {},
       children: [
-        // {
-        //   draggableId: 2,
-        //   index: 1,
-        //   type: "Horizontal",
-        //   children: [
-        //     // { draggableId: 3, index: 1, type: "Element", config: { id: "test" } }
-        //   ]
-        // }
+        {
+          draggableId: 2,
+          index: 1,
+          type: "Horizontal",
+          children: [
+            { draggableId: 3, index: 1, type: "Element", config: { id: "test" } }
+          ]
+        }
       ]
     }
   ]);
