@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import "./LayoutDesigner.scss";
 import LHSElements from "./LHSElements";
+import uuid4 from "uuid";
 
 const TypeLookup = {
   0: "Vertical",
@@ -17,51 +18,45 @@ const TypeElementLookup = {
   Vertical: input => buildDroppable(input)
 };
 
-const buildDroppable = (config) => {
-  const droppableId = `drop_${config.draggableId}`;
-  console.log(">>>>> Trying to build droppable:", config, droppableId);
-  return (
-    <Droppable
-      droppableId={droppableId}
-      key={config.draggableId}
-      direction={config.type.toLowerCase()}
-    >
-      {(provided, snapshot) => (
-        <div
-          className={`${config.type.toLowerCase()}Container`}
-          {...provided.droppableProps}
-          ref={provided.innerRef}
-          style={snapshot.isDraggingOver ? { background: "lightgrey" } : {}}
+const buildDroppable = (config) =>
+    (
+        <Droppable
+            droppableId={config.draggableId}
+            key={config.draggableId}
+            direction={config.type.toLowerCase()}
         >
-          {config.children.map((x, index) => {
-            return buildDraggable(x, index, );
-          })}
+          {(provided, snapshot) => (
+              <div
+                  className={`${config.type.toLowerCase()}Container`}
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                  style={snapshot.isDraggingOver ? {background: "lightgrey"} : {}}
+              >
+                {config.children.map((x, index) => {
+                  return buildDraggable(x, index,);
+                })}
 
-          {provided.placeholder}
-        </div>
-      )}
-    </Droppable>
-  );
-};
+                {provided.placeholder}
+              </div>
+          )}
+        </Droppable>
+    );
 
-const buildDraggable = (x, index) => {
-  const draggableId = `drag_${x.draggableId}`;
-  console.log(">>>>>>Trying to build draggable:", x, index, draggableId);
-  return (
-    <Draggable draggableId={draggableId} index={index} key={x.draggableId}>
-      {(provided, snapshot) => (
-        <div
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-          className="elementContainer"
-        >
-          {TypeElementLookup[x.type](x)}
-        </div>
-      )}
-    </Draggable>
-  );
-};
+const buildDraggable = (x, index) =>
+    (
+        <Draggable draggableId={x.draggableId} index={index} key={x.draggableId}>
+          {(provided, snapshot) => (
+              <div
+                  ref={provided.innerRef}
+                  {...provided.draggableProps}
+                  {...provided.dragHandleProps}
+                  className="elementContainer"
+              >
+                {TypeElementLookup[x.type](x)}
+              </div>
+          )}
+        </Draggable>
+    );
 
 const updateState = (id, index, arr, matching, item) => {
   if (matching) {
@@ -79,29 +74,21 @@ const updateState = (id, index, arr, matching, item) => {
 const LayoutDesigner = () => {
   const [layout, setLayout] = useState([
     {
-      draggableId: 1,
+      draggableId: uuid4(),
       type: "Vertical",
       config: {},
       children: [
         {
-          draggableId: 2,
+          draggableId: uuid4(),
           index: 1,
           type: "Horizontal",
           children: [
-            { draggableId: 3, index: 1, type: "Element", config: { id: "test" } }
+            { draggableId: uuid4(), index: 1, type: "Element", config: { id: "test" } }
           ]
         }
       ]
     }
   ]);
-  const [lastIndex, setLastIndex] = useState(40);
-
-  useEffect(() => {});
-
-  const getIdFromDroppableId = id => {
-    if (!id.includes("_")) return id;
-    return Number(id.replace("drop_", ""));
-  };
 
   const onDragEnd = ({ source, destination }) => {
     if (
@@ -112,12 +99,12 @@ const LayoutDesigner = () => {
       return;
 
     const updatedState = updateState(
-      getIdFromDroppableId(destination.droppableId),
+      destination.droppableId,
       destination.index,
       layout,
       destination.droppableId === "designerArea",
       {
-        draggableId: lastIndex + 1,
+        draggableId: uuid4(),
         type: TypeLookup[source.index],
         config: {},
         children: []
@@ -125,7 +112,6 @@ const LayoutDesigner = () => {
     );
 
     setLayout(updatedState);
-    setLastIndex(lastIndex + 1);
   };
 
   return (
