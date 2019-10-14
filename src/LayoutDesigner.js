@@ -82,17 +82,16 @@ const updateState = (id, index, arr, matching, item) => {
 };
 
 const LayoutDesigner = ({uiLayout}) => {
-  const [layout, setLayout] = useState(convertFromUILayoutToState(uiLayout));
+  const [layout, setLayout] = useState(null);
   useEffect(() => {
     if(uiLayout){
-    setLayout(convertFromUILayoutToState(uiLayout));
+      setLayout(uiLayout.rows.map(x => convertFromUILayoutToState(x)));
     }
   }, [uiLayout]);
 
   const onDragEnd = async ({ source, destination, type }) => {
     if (!destination) return;
 
-    console.log({ source, destination, type });
     const updatedState = updateState(
       destination.droppableId,
       destination.index,
@@ -106,12 +105,8 @@ const LayoutDesigner = ({uiLayout}) => {
       }
     );
 
-    console.log(">>>>>>>>updated state", updatedState );
-
     await setLayout(updatedState);
     indexSingleton.increment();
-    // setLastIndex(lastIndex + 1);
-    // /lastIndex++;
   };
 
   return (
@@ -138,7 +133,7 @@ const LayoutDesigner = ({uiLayout}) => {
                       : { padding: "10px" }
                   }
                 >
-                  {layout &&  buildDraggable(layout, 0, null)}
+                  {layout && layout.map((x, index) => buildDraggable(x, index, null))}
                   {provided.placeholder}
                 </div>
               )}
