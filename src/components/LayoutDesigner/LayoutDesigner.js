@@ -34,8 +34,8 @@ const LayoutDesigner = ({uiLayout}) => {
     Vertical: input => buildDroppable(input)
   };
 
-  const buildDroppable = config => {
-    return (
+  const buildDroppable = config =>
+    (
         <Droppable
             type="drop"
             droppableId={config.draggableId}
@@ -46,12 +46,16 @@ const LayoutDesigner = ({uiLayout}) => {
               <div
                   {...provided.droppableProps}
                   ref={provided.innerRef}
-                  style={snapshot.isDraggingOver ? { background: "lightgrey",  border: "1px dashed black" } : {border: "1px dashed black" }}
+                  style={snapshot.isDraggingOver ? {
+                    background: "lightgrey",
+                    border: "1px dashed black"
+                  } : {border: "1px dashed black"}}
               >
-                <Element {...config.config}  type={config.type} draggableId={config.draggableId} updateConfig={(config, id) => {
-                  const a = updateConfig(layout, id, config);
-                  return setLayout(a);
-                }} />
+                <Element {...config.config} type={config.type} draggableId={config.draggableId}
+                         updateConfig={(config, id) => {
+                           const a = updateConfig(layout, id, config);
+                           return setLayout(a);
+                         }}/>
                 <div
                     className={`${config.type.toLowerCase()}Container`}
                 >
@@ -65,10 +69,9 @@ const LayoutDesigner = ({uiLayout}) => {
           )}
         </Droppable>
     );
-  };
 
-  const buildDraggable = (x, index) => {
-    return (
+  const buildDraggable = (x, index) =>
+    (
         <Draggable draggableId={x.draggableId} index={index} key={x.draggableId}>
           {(provided, snapshot) => (
               <div
@@ -82,7 +85,6 @@ const LayoutDesigner = ({uiLayout}) => {
           )}
         </Draggable>
     );
-  };
 
   const updateConfig = (configs, id, config) => {
     if(Array.isArray(configs))
@@ -111,9 +113,10 @@ const LayoutDesigner = ({uiLayout}) => {
     });
   };
 
-  const onDragEnd = async ({ source, destination, type }) => {
+  const onDragEnd = async ({ source, destination }) => {
     if (!destination) return;
 
+    indexSingleton.increment();
     const updatedState = updateState(
       destination.droppableId,
       destination.index,
@@ -126,9 +129,7 @@ const LayoutDesigner = ({uiLayout}) => {
         children: []
       }
     );
-
-    await setLayout(updatedState);
-    indexSingleton.increment();
+    setLayout(updatedState.filter(x => x));
   };
 
   return (
