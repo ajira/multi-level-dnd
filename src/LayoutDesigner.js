@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
-import uuid from "uuid";
+// import uuidv1 from "uuid";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import "./LayoutDesigner.scss";
 import LHSElements from "./LHSElements";
+import indexSingleton from "./IndexSingleton";
+import {convertFromUILayoutToState, convertFromStateToUILayout} from "./TransformationHelper";
 
 const TypeLookup = {
   0: "Vertical",
@@ -79,35 +81,15 @@ const updateState = (id, index, arr, matching, item) => {
   });
 };
 
-const LayoutDesigner = () => {
-  const [layout, setLayout] = useState([
-    {
-      draggableId: uuid.v1(),
-      type: "Vertical",
-      config: {},
-      children: [
-        {
-          draggableId: uuid.v1(),
-          index: 1,
-          type: "Horizontal",
-          children: [
-            {
-              draggableId: uuid.v1(),
-              index: 1,
-              type: "Element",
-              config: { id: "test" }
-            }
-          ]
-        }
-      ]
+const LayoutDesigner = ({uiLayout}) => {
+  const [layout, setLayout] = useState(convertFromUILayoutToState(uiLayout));
+  useEffect(() => {
+    if(uiLayout){
+    setLayout(convertFromUILayoutToState(uiLayout));
     }
-  ]);
+  }, [uiLayout]);
 
-  const [lastIndex, setLastIndex] = useState(40);
-
-  useEffect(() => {});
-
-  const onDragEnd = ({ source, destination, type }) => {
+  const onDragEnd = async ({ source, destination, type }) => {
     if (!destination) return;
 
     console.log({ source, destination, type });
@@ -117,45 +99,54 @@ const LayoutDesigner = () => {
       layout,
       destination.droppableId === "designerArea",
       {
-        draggableId: lastIndex + 1,
+        draggableId: indexSingleton.index,
         type: TypeLookup[source.index],
         config: {},
         children: []
       }
     );
 
-    setLayout(updatedState);
-    setLastIndex(lastIndex + 1);
+    console.log(">>>>>>>>updated state", updatedState );
+
+    await setLayout(updatedState);
+    indexSingleton.increment();
+    // setLastIndex(lastIndex + 1);
+    // /lastIndex++;
   };
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <div className="container">
-        <div className="lhsContainer">
-          <Droppable type="drop" droppableId="lhsArea">
-            {(provided, snapshot) => <LHSElements provided={provided} />}
-          </Droppable>
+    <div>
+      <div onClick={() => {
+        console.log(JSON.stringify(convertFromStateToUILayout(layout)));
+      }}> Click to generate state </div>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <div className="container">
+          <div className="lhsContainer">
+            <Droppable type="drop" droppableId="lhsArea">
+              {(provided, snapshot) => <LHSElements provided={provided} />}
+            </Droppable>
+          </div>
+          <div className="rhsContainer">
+            <Droppable type="drop" droppableId="designerArea">
+              {(provided, snapshot) => (
+                <div
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                  style={
+                    snapshot.isDraggingOver
+                      ? { background: "lightgrey", padding: "10px" }
+                      : { padding: "10px" }
+                  }
+                >
+                  {layout &&  buildDraggable(layout, 0, null)}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          </div>
         </div>
-        <div className="rhsContainer">
-          <Droppable type="drop" droppableId="designerArea">
-            {(provided, snapshot) => (
-              <div
-                {...provided.droppableProps}
-                ref={provided.innerRef}
-                style={
-                  snapshot.isDraggingOver
-                    ? { background: "lightgrey", padding: "10px" }
-                    : { padding: "10px" }
-                }
-              >
-                {layout.map((x, index) => buildDraggable(x, index, null))}
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
-        </div>
-      </div>
-    </DragDropContext>
+      </DragDropContext>
+    </div>
   );
 };
 

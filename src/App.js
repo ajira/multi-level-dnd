@@ -1,12 +1,13 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import LayoutDesigner from "./LayoutDesigner";
+import layout from "./config/userConfig";
 
 function App() {
   return (
     <div className="App">
-      <LayoutDesigner/>
+      <LayoutDesigner uiLayout={layout}/>
+      {/*<LayoutDesigner uiLayout={null}/>*/}
     </div>
   );
 }
