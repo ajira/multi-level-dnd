@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
-import LayoutDesigner from "./LayoutDesigner";
-import layout from "./config/userConfig";
+import LayoutDesigner from "./components/LayoutDesigner/LayoutDesigner";
+import layout from "./config/flashCards";
 
 function App() {
   return (

@@ -1,5 +1,6 @@
 import index from "./IndexSingleton";
 
+const  objectWithoutRows = ({rows, ...rest}) => rest;
 const convertFromUILayoutToState = (layout) => {
     if (!layout) return null;
     index.increment();
@@ -7,7 +8,8 @@ const convertFromUILayoutToState = (layout) => {
         return {
             draggableId: index.index,
             type: "Horizontal",
-            children: layout.map( x => convertFromUILayoutToState(x))
+            children: layout.map( x => convertFromUILayoutToState(x)),
+            config: objectWithoutRows(layout)
         }
     }
 
@@ -15,7 +17,8 @@ const convertFromUILayoutToState = (layout) => {
         return {
             draggableId: index.index,
             type: "Vertical",
-            children: layout.rows.map( x => convertFromUILayoutToState(x))
+            children: layout.rows.map( x => convertFromUILayoutToState(x)),
+            config: objectWithoutRows(layout)
         }
     }
 
@@ -35,6 +38,7 @@ const convertFromStateToUILayout = state => {
 
     if(state.type === "Vertical") {
         return {
+            ...state.config,
             rows: state.children.map( x => convertFromStateToUILayout(x))
         }
     }
