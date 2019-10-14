@@ -1,10 +1,11 @@
-import uuidv1 from "uuid";
+import index from "./IndexSingleton";
 
 const convertFromUILayoutToState = (layout) => {
     if (!layout) return null;
+    index.increment();
     if(Array.isArray(layout)){
         return {
-            draggableId: uuidv1(),
+            draggableId: index.index,
             type: "Horizontal",
             children: layout.map( x => convertFromUILayoutToState(x))
         }
@@ -12,18 +13,17 @@ const convertFromUILayoutToState = (layout) => {
 
     if(layout.rows){
         return {
-            draggableId: uuidv1(),
+            draggableId: index.index,
             type: "Vertical",
             children: layout.rows.map( x => convertFromUILayoutToState(x))
         }
     }
 
     return {
-        draggableId: uuidv1(),
+        draggableId: index.index,
         type: "Element",
         config: layout
     };
-
 };
 
 const convertFromStateToUILayout = state => {
@@ -44,7 +44,6 @@ const convertFromStateToUILayout = state => {
     }
 
     return state.config;
-
 };
 
 
