@@ -7,7 +7,6 @@ function App() {
   return (
     <div className="App">
       <LayoutDesigner uiLayout={layout}/>
-      {/*<LayoutDesigner uiLayout={null}/>*/}
     </div>
   );
 }
