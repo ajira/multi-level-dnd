@@ -135,7 +135,7 @@ const LayoutDesigner = ({uiLayout}) => {
   return (
     <div>
       <div onClick={() => {
-        console.log(JSON.stringify(convertFromStateToUILayout(layout)));
+        console.log(JSON.stringify(layout));
       }}> Click to generate state </div>
       <DragDropContext onDragEnd={onDragEnd}>
         <div className="container">

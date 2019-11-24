@@ -1,0 +1,35 @@
+[
+  {
+    "draggableId": 41,
+    "type": "Element",
+    "config": {
+      "id": "title"
+    },
+    "children": []
+  },
+  {
+    "draggableId": 42,
+    "type": "Horizontal",
+    "config": {},
+    "children": [
+      {
+        "draggableId": 43,
+        "type": "Element",
+        "config": {
+          "id": "h1",
+          "width": "6"
+        },
+        "children": []
+      },
+      {
+        "draggableId": 44,
+        "type": "Element",
+        "config": {
+          "id": "h2",
+          "width": "6"
+        },
+        "children": []
+      }
+    ]
+  }
+]
