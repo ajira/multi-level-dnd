@@ -8,3 +8,6 @@ In [Part 1]() we looked at how a JSON configuration drive the UI generation, thi
 The Drag and Drop UI was built using [React Beautiful DnD](https://github.com/atlassian/react-beautiful-dnd). 
 Components from [Part 1]() were used to give it a look and feel similar to the end result. 
 
+
+
+WIP.... TO BE CONTINUED...
