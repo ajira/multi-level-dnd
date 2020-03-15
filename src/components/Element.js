@@ -4,30 +4,27 @@ import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
-
-const Element = ({showBorder = false, nospace = false, width = 12, id, filterMessage = false, type, updateConfig, draggableId}) => {
-    return(<div className="elementBaseContainer">
-        {type ==="Element" &&
+const Element = ({showBorder = false, nospace = false, width = 12, id, filterMessage = false, type, updateConfig}) => {
+    return (<div className="elementBaseContainer">
+        {type === "Element" &&
         <>
             <TextField
                 label="Id"
                 value={id}
-                onChange={e => updateConfig({id: e.target.value}, draggableId)}
+                onChange={e => updateConfig({id: e.target.value})}
                 margin="normal"
             />
-
             <TextField
                 label="Width"
                 value={width || 12}
-                onChange={e => updateConfig({width: e.target.value}, draggableId)}
-                margin="normal" />
-
+                onChange={e => updateConfig({width: e.target.value})}
+                margin="normal"/>
             <FormControlLabel
                 control={
                     <Switch
-                    checked={filterMessage}
-                    onChange={e => updateConfig({filterMessage: e.target.checked}, draggableId)}
-                    color="primary"/>
+                        checked={filterMessage}
+                        onChange={e => updateConfig({filterMessage: e.target.checked})}
+                        color="primary"/>
                 }
                 label="Show Filter Message"
             />
@@ -38,7 +35,7 @@ const Element = ({showBorder = false, nospace = false, width = 12, id, filterMes
             control={
                 <Switch
                     checked={nospace}
-                    onChange={e => updateConfig({nospace: e.target.checked}, draggableId)}
+                    onChange={e => updateConfig({nospace: e.target.checked})}
                     color="primary"
                 />
             }
@@ -49,7 +46,7 @@ const Element = ({showBorder = false, nospace = false, width = 12, id, filterMes
             control={
                 <Switch
                     checked={showBorder}
-                    onChange={e => updateConfig({showBorder: e.target.checked}, draggableId)}
+                    onChange={e => updateConfig({showBorder: e.target.checked})}
                     color="primary"
                 />
             }
