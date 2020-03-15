@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import "./LayoutDesigner.scss";
 import LHSElements from "../LHSElement/LHSElements";
 import indexSingleton from "../../helpers/IndexSingleton";
-import {convertFromUILayoutToState, convertFromStateToUILayout} from "../../helpers/TransformationHelper";
 import Element from "../Element";
 
 const TypeLookup = {
@@ -13,13 +12,7 @@ const TypeLookup = {
 };
 
 const LayoutDesigner = ({uiLayout}) => {
-  const [layout, setLayout] = useState(null);
-  useEffect(() => {
-    if(uiLayout){
-      setLayout(uiLayout.rows.map(x => convertFromUILayoutToState(x)));
-    }
-  }, [uiLayout]);
-
+  const [layout, setLayout] = useState(uiLayout || null);
 
   const TypeElementLookup = {
     Element: config => {
