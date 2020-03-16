@@ -14,7 +14,7 @@ function App() {
                                 new HorizontalElementDefinition(),
                                 new ChildElementDefinition()
                             ]}
-            onComplete={result => console.log(result)}/>
+                            onComplete={result => console.log(JSON.stringify(result, null, 4))}/>
         </div>
     );
 }

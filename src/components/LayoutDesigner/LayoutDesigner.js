@@ -1,9 +1,11 @@
 import React, {useState} from "react";
 import {DragDropContext} from "react-beautiful-dnd";
 import "./LayoutDesigner.scss";
+import "./Element.scss";
 import LHS from "./LHS";
 import RHS from "./RHS";
 import indexSingleton from "../../helpers/IndexSingleton";
+import {definitionsMap} from "../../helpers/utils";
 
 const LayoutDesigner = ({uiLayout, definitions, onComplete}) => {
     const [layout, setLayout] = useState(uiLayout || null);
@@ -64,7 +66,10 @@ const LayoutDesigner = ({uiLayout, definitions, onComplete}) => {
             <DragDropContext onDragEnd={onDragEnd}>
                 <div className="container">
                     <LHS definitions={definitions}/>
-                    <RHS definitions={definitions} layout={layout} updateConfig={updateConfig} setLayout={setLayout}/>
+                    <RHS definitions={definitionsMap(definitions)}
+                         layout={layout}
+                         updateConfig={updateConfig}
+                         setLayout={setLayout}/>
                 </div>
             </DragDropContext>
         </div>

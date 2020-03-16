@@ -1,8 +1,7 @@
 import React from "react"
 import {Draggable, Droppable} from "react-beautiful-dnd";
-import Element from "../Element";
 
-const LDraggable = ({config, index, layout, updateConfig, setLayout}) =>
+const LDraggable = ({config, layout, definitions, index, updateConfig, setLayout}) =>
     (
         <Draggable draggableId={config.draggableId} index={index} key={config.draggableId}>
             {(provided, snapshot) => (
@@ -13,16 +12,18 @@ const LDraggable = ({config, index, layout, updateConfig, setLayout}) =>
                     className="elementContainer"
                 >
                     <LDroppable config={config}
-                                layout={layout}
                                 updateConfig={updateConfig}
-                                åsetLayout={setLayout}
-                                key={index}/>
+                                setLayout={setLayout}
+                                key={index}
+                                layout={layout}
+                                definitions={definitions}
+                    />
                 </div>
             )}
         </Draggable>
     );
 
-const LDroppable = ({config, layout, updateConfig, setLayout}) =>
+const LDroppable = ({definitions, config, layout, updateConfig, setLayout}) =>
     (
         <Droppable
             type="drop"
@@ -39,20 +40,22 @@ const LDroppable = ({config, layout, updateConfig, setLayout}) =>
                         border: "1px dashed black"
                     } : {border: "1px dashed black"}}
                 >
-                    <Element {...config.config} type={config.type}
-                             updateConfig={config => {
-                                 const a = updateConfig(layout, config.draggableId, config);
-                                 return setLayout(a);
-                             }}/>
+                    {definitions[config.type]
+                        .buildRHSElement(config.config,
+                            x => setLayout(updateConfig(layout, config.draggableId, x))
+                        )}
+
                     <div
                         className={`${config.type.toLowerCase()}Container`}
                     >
                         {config.children.map((x, index) => <LDraggable config={x}
                                                                        index={index}
-                                                                       layout={layout}
                                                                        setLayout={setLayout}
                                                                        updateConfig={updateConfig}
-                                                                       key={index}/>
+                                                                       key={index}
+                                                                       layout={layout}
+                                                                       definitions={definitions}
+                            />
                         )}
 
                         {provided.placeholder}
@@ -63,7 +66,7 @@ const LDroppable = ({config, layout, updateConfig, setLayout}) =>
     );
 
 
-const RHS = ({layout, updateConfig, setLayout}) => <div className="rhsContainer">
+const RHS = ({definitions, layout, updateConfig, setLayout}) => <div className="rhsContainer">
     <Droppable type="drop" droppableId="designerArea">
         {(provided, snapshot) => (
             <div
@@ -76,8 +79,9 @@ const RHS = ({layout, updateConfig, setLayout}) => <div className="rhsContainer"
                 }
             >
                 {layout && layout.map((x, index) => <LDraggable config={x}
-                                                                index={index}
                                                                 layout={layout}
+                                                                definitions={definitions}
+                                                                index={index}
                                                                 updateConfig={updateConfig}
                                                                 setLayout={setLayout}
                                                                 key={index}/>)}
