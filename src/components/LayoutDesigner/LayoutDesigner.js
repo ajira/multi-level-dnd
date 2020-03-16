@@ -5,7 +5,7 @@ import LHS from "./LHS";
 import RHS from "./RHS";
 import indexSingleton from "../../helpers/IndexSingleton";
 
-const LayoutDesigner = ({uiLayout, definitions}) => {
+const LayoutDesigner = ({uiLayout, definitions, onComplete}) => {
     const [layout, setLayout] = useState(uiLayout || null);
 
     const updateConfig = (configs, id, config) => {
@@ -42,7 +42,6 @@ const LayoutDesigner = ({uiLayout, definitions}) => {
         if (!destination) return;
 
         indexSingleton.increment();
-        console.log("OnDragEnd source is:", source);
         const updatedState = updateState(
             destination.droppableId,
             destination.index,
@@ -50,7 +49,7 @@ const LayoutDesigner = ({uiLayout, definitions}) => {
             destination.droppableId === "designerArea",
             {
                 draggableId: indexSingleton.index,
-                type: definitions[source.index],
+                type: definitions[source.index].type,
                 config: {},
                 children: []
             }
@@ -60,9 +59,7 @@ const LayoutDesigner = ({uiLayout, definitions}) => {
 
     return (
         <div>
-            <div onClick={() => {
-                console.log(JSON.stringify(layout));
-            }}> Click to generate state
+            <div onClick={() => onComplete(layout)}> Click to generate state
             </div>
             <DragDropContext onDragEnd={onDragEnd}>
                 <div className="container">

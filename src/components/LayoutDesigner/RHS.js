@@ -85,6 +85,6 @@ const RHS = ({layout, updateConfig, setLayout}) => <div className="rhsContainer"
             </div>
         )}
     </Droppable>
-</div>
+</div>;
 
 export default RHS

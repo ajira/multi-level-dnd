@@ -13,7 +13,8 @@ function App() {
                                 new VerticalElementDefinition(),
                                 new HorizontalElementDefinition(),
                                 new ChildElementDefinition()
-                            ]}/>
+                            ]}
+            onComplete={result => console.log(result)}/>
         </div>
     );
 }
