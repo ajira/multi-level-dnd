@@ -6,7 +6,7 @@ import TextField from "@material-ui/core/TextField";
 
 export class ChildElementDefinition extends ElementDefinition {
     constructor() {
-        super("element", "Element", buildRHSElement, buildLHSElement);
+        super("element", "Element", true, buildRHSElement, buildLHSElement);
     }
 }
 

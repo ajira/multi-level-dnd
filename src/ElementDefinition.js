@@ -2,9 +2,10 @@ import {Draggable} from "react-beautiful-dnd";
 import React from "react";
 
 export class ElementDefinition {
-    constructor(id, type, buildRHSElement, buildLHSElement) {
+    constructor(id, type, isLeaf, buildRHSElement, buildLHSElement) {
         this.id = id;
         this.type = type;
+        this.isLeaf = isLeaf;
         this.buildRHSElement = buildRHSElement;
         this.buildLHSElement = buildLHSElement;
     }

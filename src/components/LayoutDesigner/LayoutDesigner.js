@@ -16,7 +16,7 @@ const LayoutDesigner = ({uiLayout, definitions, onComplete}) => {
 
         if (configs.draggableId === id) return {...configs, config: {...configs.config, ...config}};
 
-        if (configs.type !== "Element") return {
+        if (!definitionsMap(definitions)[configs.type].isLeaf) return {
             ...configs,
             children: configs.children.map(x => updateConfig(x, id, config))
         };
@@ -32,7 +32,7 @@ const LayoutDesigner = ({uiLayout, definitions, onComplete}) => {
         }
 
         return arr.map(x => {
-            if (x.type === "Element") return x;
+            if (definitionsMap(definitions)[x.type].isLeaf) return x;
             return {
                 ...x,
                 children: updateState(id, index, x.children, x.draggableId === id, item)

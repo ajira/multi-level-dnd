@@ -5,7 +5,7 @@ import Switch from "@material-ui/core/Switch";
 
 export class VerticalElementDefinition extends ElementDefinition {
     constructor() {
-        super("vertical", "Vertical", buildRHSElement, buildLHSElement);
+        super("vertical", "Vertical", false, buildRHSElement, buildLHSElement);
     }
 }
 
