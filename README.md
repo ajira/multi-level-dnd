@@ -82,15 +82,13 @@ The other need was to help them build the contents of the nodes. It needs to be 
 
 So we came up with a common class called the ElementDefinition with the following constructor params. 
 
-
-| Property | Description |
-| -------- | ----------- |
-| id | an unique string to identify the node |
-| type | the type to be set while generating the actual JSON config |
-| isLeaf | A boolean that says if it's a leaf or not | 
-| buildRHSElement | A function that takes in the current config of the node and it's update method and inturn returns the Form to be shown | 
-| buildLHSElement | A function that taken in React Beautiful DnD provider and returns a node that needs to be shown in the LHS |
-
+| Property        | Description                                                                                                                   |
+| --------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| id              | an unique string to identify the node                                                                                         |
+| type            | the type to be set while generating the actual JSON config                                                                    |
+| isLeaf          | A boolean that says if it's a leaf or not                                                                                     | 
+| buildRHSElement | A function that takes in the current config of the node and it's update method and inturn returns the Form to be shown        | 
+| buildLHSElement | A function that taken in React Beautiful DnD provider and returns a node that needs to be shown in the LHS                    |
 
 Using this class as the base class, we went ahead and created separate implementations for Vertical , Horizontal, Polt, Title and Table. 
 Now the `LayoutDesigner` component takes an extra parameter called `definitions` which is an array of all the ElementDefinitions. It looks like below.  A sample implementation of a [ChildElement](https://github.com/arunmadhavan-g/multi-level-dnd/blob/master/src/config/ChildElementDefinition.js) can be referred from here. 
