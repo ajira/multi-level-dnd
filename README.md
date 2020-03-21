@@ -81,6 +81,8 @@ Horizontal and Vertical are non-leaf nodes which means they allow nested structu
 The other need was to help them build the contents of the nodes. It needs to be shown on the LHS ( they can choose to use an Icon instead of simple string) and also draw the corresponding form on the RHS. Each of these forms can be unique depending on the specific type. 
 
 So we came up with a common class called the ElementDefinition with the following constructor params. 
+
+
 | Property | Description |
 | -------- | ----------- |
 | id | an unique string to identify the node |
