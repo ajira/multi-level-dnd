@@ -100,10 +100,7 @@ Now the `LayoutDesigner` component takes an extra parameter called `definitions`
                       new HorizontalElementDefinition(),
                       new ChildElementDefinition()
                   ]}
-                  onComplete={result => 
-                                console.log(JSON.stringify(result, 
-                                                           null, 
-                                                           4))}/>
+                  onComplete={result => console.log(JSON.stringify(result, null, 4))}/>
 ```
 
 
