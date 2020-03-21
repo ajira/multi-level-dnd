@@ -81,13 +81,13 @@ Horizontal and Vertical are non-leaf nodes which means they allow nested structu
 The other need was to help them build the contents of the nodes. It needs to be shown on the LHS ( they can choose to use an Icon instead of simple string) and also draw the corresponding form on the RHS. Each of these forms can be unique depending on the specific type. 
 
 So we came up with a common class called the ElementDefinition with the following constructor params. 
-| | |
-|--|--|
-|id| an unique string to identify the node|
-|type| the type to be set while generating the actual JSON config |
-|isLeaf| A boolean that says if it's a leaf or not| 
-|buildRHSElement| A function that takes in the current config of the node and it's update method and inturn returns the Form to be shown| 
-|buildLHSElement| A function that taken in React Beautiful DnD provider and returns a node that needs to be shown in the LHS |
+| Property | Description |
+| -------- | ----------- |
+| id | an unique string to identify the node |
+| type | the type to be set while generating the actual JSON config |
+| isLeaf | A boolean that says if it's a leaf or not | 
+| buildRHSElement | A function that takes in the current config of the node and it's update method and inturn returns the Form to be shown | 
+| buildLHSElement | A function that taken in React Beautiful DnD provider and returns a node that needs to be shown in the LHS |
 
 
 Using this class as the base class, we went ahead and created separate implementations for Vertical , Horizontal, Polt, Title and Table. 
