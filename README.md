@@ -40,7 +40,7 @@ Since each of them apart from holding an ID for themselves also had confguration
 
 The final UI looked something like below. 
 
-#TODO: Add the UI here
+![DnD UI](./images/DnD.png)
 
 
 ## Using the Version 1
@@ -49,7 +49,9 @@ For using the first version it was quite simple, one needs to use the component 
 
 1. uiLayout: This is the JSON structure that is based on the one defined in part1 of the blog. The recursive structure that build the UI. This is particularly useful when one needs to edit an existing page. For all new creates a null can be passed. 
 
-2. onComplete: This takes a function that has an input of "result" which is the JSON configuration generated.  The current UI has a button called generate config, that would inturn pass the internal state to this onComplete function and the side effecting can be handled that way. We saved the JSON to a backend so that it can be retrieved later for drawing a dashboard in a different application in this particular callback function.
+2. onComplete: This takes a function that has an input of "result" which is the JSON configuration generated.  The current UI has a button called generate config, that would inturn pass the internal state to this onComplete function and the side effecting can be handled that way. We saved the JSON to a backend so that it can be retrieved later for drawing a dashboard in a different application in this particular callback function. The click generates a JSON as shown in the image below
+
+![DnD with JSON](./images/Dnd_WithJson.png)
 
 
 We leveraged the above solution and were able to generate the JSON without any issues. Until the next change came in.
